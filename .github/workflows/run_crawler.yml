@@ -5,13 +5,16 @@ on:
     - cron: "*/3 * * * *"   # 每 3 分鐘（UTC 時區）
   workflow_dispatch:        # 手動觸發（可選）
 
+permissions:
+  contents: write
+
 jobs:
   run-crawler:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -27,11 +30,13 @@ jobs:
       run: python evacuate_tw.py
 
     - name: Commit and push result
+      env:
+        GITHUB_TOKEN: ${{ secrets.USA_STEP_SECRET}}
       run: |
         git config --global user.name "godknowspe@gmail.com"
         git config --global user.email "godknowspe@gmail.com"
-        git add last_level.json
+        git remote set-url origin https://x-access-token:${TOKEN}@github.com/godknowspe/STEP_TW.git
+        git checkout main
+        git add . -u
         git commit -m "Update result"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.USA_STEP_SECRET}}
+        git push origin main
