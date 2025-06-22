@@ -1,0 +1,18 @@
+[project]
+name = "us-step"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Gary Liang",email = "gary.liang@cortina-access.com"}
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "requests (>=2.32.4,<3.0.0)",
+    "bs4 (>=0.0.2,<0.0.3)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
