@@ -1,0 +1,27 @@
+name: Run Python Crawler Every 3 Minutes
+
+on:
+  schedule:
+    - cron: "*/3 * * * *"   # 每 3 分鐘（UTC 時區）
+  workflow_dispatch:        # 手動觸發（可選）
+
+jobs:
+  run-crawler:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run crawler
+      run: python crawler.py
