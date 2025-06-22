@@ -39,4 +39,4 @@ jobs:
         git checkout main
         git add . -u
         git commit -m "Update result"
-        git push origin main
+        git push --force origin main
