@@ -26,8 +26,12 @@ jobs:
     - name: Run crawler
       run: python evacuate_tw.py
 
-    - name: Upload result
-      uses: actions/upload-artifact@v4
-      with:
-        name: result
-        path: last_level.json
+    - name: Commit and push result
+      run: |
+        git config --global user.name "godknowspe@gmail.com"
+        git config --global user.email "godknowspe@gmail.com"
+        git add last_level.json
+        git commit -m "Update result"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.USA_STEP_SECRET}}
