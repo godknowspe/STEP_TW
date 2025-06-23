@@ -20,8 +20,8 @@ def fetch_alert_level() -> str:
     soup = BeautifulSoup(resp.text, "html.parser")
 
     level_tag_list = soup.find_all("h3", class_="tsg-rwd-eab-title-frame")
-    if len(level_tag_list) >= 2:
-        level_tag = level_tag_list[1]
+    if len(level_tag_list) > 1:
+        level_tag = level_tag_list[len(level_tag_list)-1]
     else:
         raise ValueError("Alert level element not found on the page.")
 
