@@ -56,7 +56,7 @@ def main():
         current_level = fetch_alert_level()
         previous_level = load_last_level()
 
-        if current_level ＝＝ previous_level:
+        if current_level == previous_level:
             message = f"\U0001f6a8 *Travel Alert Update*\nTaiwan alert level changed!\n*Old:* {previous_level or 'N/A'}\n*New:* {current_level}"
             send_telegram_notify(message)
         else:
