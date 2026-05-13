@@ -11,10 +11,14 @@ permissions:
 jobs:
   run-crawler:
     runs-on: ubuntu-latest
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      TOKEN: ${{ secrets.USA_STEP_SECRET }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -30,15 +34,11 @@ jobs:
         run: python evacuate_tw.py
 
       - name: Commit and push result
-        env:
-          GITHUB_TOKEN: ${{ secrets.USA_STEP_SECRET}}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           git config --global user.name "godknowspe@gmail.com"
           git config --global user.email "godknowspe@gmail.com"
           git remote set-url origin https://x-access-token:${TOKEN}@github.com/godknowspe/STEP_TW.git
           git checkout main
           git add . -u
-          git commit -m "Update result"
+          git commit -m "Update result" || echo "No changes to commit"
           git push --force origin main
